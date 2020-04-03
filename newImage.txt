@@ -1,0 +1,16 @@
+#http://docs.bigbluebutton.org/greenlight/gl-customize.html#customizing-greenlight
+git clone git@github.com:sajadonline/greenlight.git
+greenlight-old/.env greenlight/.env
+cp -r greenlight-old/* greenlight
+cd greenlight
+docker run --rm bigbluebutton/greenlight:v2 bundle exec rake secret
+sudo bbb-conf --secret
+docker run --rm --env-file .env bigbluebutton/greenlight:v2 bundle exec rake conf:check
+docker-compose -v
+docker run --rm bigbluebutton/greenlight:v2 cat ./docker-compose.yml > docker-compose.yml
+docker-compose up
+./scripts/image_build.sh arianet release-v2
+
+nano docker-compose.yml  // modify  image: <image name>:release-v2
+docker-compose down
+docker-compose up
