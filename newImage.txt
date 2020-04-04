@@ -10,6 +10,8 @@ docker run --rm --env-file .env bigbluebutton/greenlight:v2 bundle exec rake con
 docker-compose -v
 docker run --rm bigbluebutton/greenlight:v2 cat ./docker-compose.yml > docker-compose.yml
 docker-compose up
+
+//after modify again
 ./scripts/image_build.sh arianet release-v2
 
 nano docker-compose.yml  // modify  image: <image name>:release-v2
