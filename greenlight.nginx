@@ -1,5 +1,5 @@
 # Routes requests to Greenlight based on the '/b' prefix.
-# Use this file to route '/b' paths on your BigBlueButton server
+# Use this file to route '/b' paths on your arianet server
 # to the Greenlight application. If you are using a different
 # subpath, you should change it here.
 

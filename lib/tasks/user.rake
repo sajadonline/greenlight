@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'bigbluebutton_api'
+require 'arianet_api'
 
 namespace :user do
   desc "Creates a user account"

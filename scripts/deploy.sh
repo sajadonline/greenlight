@@ -1,8 +1,8 @@
 #!/bin/bash
 
-STATUS="Status: Downloaded newer image for bigbluebutton/greenlight:v2"
+STATUS="Status: Downloaded newer image for arianet/greenlight:v2"
 
-new_status=$(sudo docker pull bigbluebutton/greenlight:v2 | grep Status:)
+new_status=$(sudo docker pull arianet/greenlight:v2 | grep Status:)
 
 echo $new_status
 

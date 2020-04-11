@@ -1,28 +1,28 @@
 # frozen_string_literal: true
 
-# BigBlueButton open source conferencing system - http://www.bigbluebutton.org/.
+# arianet open source conferencing system - http://www.arianet.org/.
 #
-# Copyright (c) 2018 BigBlueButton Inc. and by respective authors (see below).
+# Copyright (c) 2018 arianet Inc. and by respective authors (see below).
 #
 # This program is free software; you can redistribute it and/or modify it under the
 # terms of the GNU Lesser General Public License as published by the Free Software
 # Foundation; either version 3.0 of the License, or (at your option) any later
 # version.
 #
-# BigBlueButton is distributed in the hope that it will be useful, but WITHOUT ANY
+# arianet is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
 # PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
 #
 # You should have received a copy of the GNU Lesser General Public License along
-# with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
+# with arianet; if not, see <http://www.gnu.org/licenses/>.
 
 require "rails_helper"
-require 'bigbluebutton_api'
+require 'arianet_api'
 
 describe BbbServer do
   include BbbServer
 
-  let(:bbb_server) { BigBlueButton::BigBlueButtonApi.new("http://bbb.example.com/bigbluebutton/api", "secret", "0.8") }
+  let(:bbb_server) { arianet::arianetApi.new("http://bbb.example.com/arianet/api", "secret", "0.8") }
 
   before do
     @user = create(:user)
@@ -35,14 +35,14 @@ describe BbbServer do
     end
 
     it "should return true when running" do
-      allow_any_instance_of(BigBlueButton::BigBlueButtonApi).to receive(:is_meeting_running?).and_return(true)
+      allow_any_instance_of(arianet::arianetApi).to receive(:is_meeting_running?).and_return(true)
       expect(room_running?(@room.bbb_id)).to be true
     end
   end
 
   context "#start_session" do
     it "should update latest session info" do
-      allow_any_instance_of(BigBlueButton::BigBlueButtonApi).to receive(:create_meeting).and_return(
+      allow_any_instance_of(arianet::arianetApi).to receive(:create_meeting).and_return(
         messageKey: ""
       )
 
@@ -56,12 +56,12 @@ describe BbbServer do
 
   context "#join_path" do
     it "should return correct join URL for user" do
-      allow_any_instance_of(BigBlueButton::BigBlueButtonApi).to receive(:get_meeting_info).and_return(
+      allow_any_instance_of(arianet::arianetApi).to receive(:get_meeting_info).and_return(
         attendeePW: @room.attendee_pw
       )
 
-      endpoint = Rails.configuration.bigbluebutton_endpoint
-      secret = Rails.configuration.bigbluebutton_secret
+      endpoint = Rails.configuration.arianet_endpoint
+      secret = Rails.configuration.arianet_secret
       fullname = "fullName=Example"
       join_via_html5 = "&join_via_html5=true"
       meeting_id = "&meetingID=#{@room.bbb_id}"
@@ -77,7 +77,7 @@ describe BbbServer do
 
   context "#recordings" do
     it "deletes the recording" do
-      allow_any_instance_of(BigBlueButton::BigBlueButtonApi).to receive(:delete_recordings).and_return(
+      allow_any_instance_of(arianet::arianetApi).to receive(:delete_recordings).and_return(
         returncode: true, deleted: true
       )
 

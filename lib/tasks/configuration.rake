@@ -7,7 +7,7 @@ require 'digest/sha1'
 namespace :conf do
   desc "Check Configuration"
   task check: :environment do
-    ENV_VARIABLES = %w(SECRET_KEY_BASE BIGBLUEBUTTON_ENDPOINT BIGBLUEBUTTON_SECRET)
+    ENV_VARIABLES = %w(SECRET_KEY_BASE arianet_ENDPOINT arianet_SECRET)
 
     # Initial check that variables are set
     print "\nChecking environment"
@@ -16,7 +16,7 @@ namespace :conf do
     end
     passed
 
-    endpoint = fix_endpoint_format(ENV['BIGBLUEBUTTON_ENDPOINT'])
+    endpoint = fix_endpoint_format(ENV['arianet_ENDPOINT'])
 
     # Tries to establish a connection to the BBB server from Greenlight
     print "Checking Connection"
@@ -25,7 +25,7 @@ namespace :conf do
 
     # Tests the checksum on the getMeetings api call
     print "Checking Secret"
-    checksum = Digest::SHA1.hexdigest("getMeetings#{ENV['BIGBLUEBUTTON_SECRET']}")
+    checksum = Digest::SHA1.hexdigest("getMeetings#{ENV['arianet_SECRET']}")
     test_request("#{endpoint}getMeetings?checksum=#{checksum}")
     passed
 
@@ -61,16 +61,16 @@ def test_request(url)
   res = Net::HTTP.get(uri)
 
   doc = Nokogiri::XML(res)
-  failed("Could not get a valid response from BigBlueButton server - #{res}") if doc.css("returncode").text != "SUCCESS"
+  failed("Could not get a valid response from arianet server - #{res}") if doc.css("returncode").text != "SUCCESS"
 rescue => e
-  failed("Error connecting to BigBlueButton server - #{e}")
+  failed("Error connecting to arianet server - #{e}")
 end
 
 def fix_endpoint_format(url)
   # Fix endpoint format if required.
   url += "/" unless url.ends_with?('/')
-  url += "api/" if url.ends_with?('bigbluebutton/')
-  url += "bigbluebutton/api/" unless url.ends_with?('bigbluebutton/api/')
+  url += "api/" if url.ends_with?('arianet/')
+  url += "arianet/api/" unless url.ends_with?('arianet/api/')
 
   url
 end

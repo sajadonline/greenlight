@@ -1,20 +1,20 @@
 # frozen_string_literal: true
 
-# BigBlueButton open source conferencing system - http://www.bigbluebutton.org/.
+# arianet open source conferencing system - http://www.arianet.org/.
 #
-# Copyright (c) 2018 BigBlueButton Inc. and by respective authors (see below).
+# Copyright (c) 2018 arianet Inc. and by respective authors (see below).
 #
 # This program is free software; you can redistribute it and/or modify it under the
 # terms of the GNU Lesser General Public License as published by the Free Software
 # Foundation; either version 3.0 of the License, or (at your option) any later
 # version.
 #
-# BigBlueButton is distributed in the hope that it will be useful, but WITHOUT ANY
+# arianet is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
 # PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
 #
 # You should have received a copy of the GNU Lesser General Public License along
-# with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
+# with arianet; if not, see <http://www.gnu.org/licenses/>.
 
 require "rails_helper"
 
@@ -31,7 +31,7 @@ describe RoomsController, type: :controller do
   include Recorder
   include BbbServer
 
-  let(:bbb_server) { BigBlueButton::BigBlueButtonApi.new("http://bbb.example.com/bigbluebutton/api", "secret", "0.8") }
+  let(:bbb_server) { arianet::arianetApi.new("http://bbb.example.com/arianet/api", "secret", "0.8") }
 
   describe "GET #show" do
     before do
@@ -236,7 +236,7 @@ describe RoomsController, type: :controller do
     end
 
     it "should use account name if user is logged in and meeting running" do
-      allow_any_instance_of(BigBlueButton::BigBlueButtonApi).to receive(:is_meeting_running?).and_return(true)
+      allow_any_instance_of(arianet::arianetApi).to receive(:is_meeting_running?).and_return(true)
 
       @request.session[:user_id] = @user.id
       post :join, params: { room_uid: @room, join_name: @user.name }
@@ -245,14 +245,14 @@ describe RoomsController, type: :controller do
     end
 
     it "should use join name if user is not logged in and meeting running" do
-      allow_any_instance_of(BigBlueButton::BigBlueButtonApi).to receive(:is_meeting_running?).and_return(true)
+      allow_any_instance_of(arianet::arianetApi).to receive(:is_meeting_running?).and_return(true)
       post :join, params: { room_uid: @room, join_name: "Join Name" }
 
       expect(response).to redirect_to(join_path(@owner.main_room, "Join Name", {}))
     end
 
     it "should render wait if meeting isn't running" do
-      allow_any_instance_of(BigBlueButton::BigBlueButtonApi).to receive(:is_meeting_running?).and_return(false)
+      allow_any_instance_of(arianet::arianetApi).to receive(:is_meeting_running?).and_return(false)
 
       @request.session[:user_id] = @user.id
       post :join, params: { room_uid: @room, join_name: @user.name }
@@ -261,7 +261,7 @@ describe RoomsController, type: :controller do
     end
 
     it "should join the room if the room has the anyone_can_start setting" do
-      allow_any_instance_of(BigBlueButton::BigBlueButtonApi).to receive(:is_meeting_running?).and_return(false)
+      allow_any_instance_of(arianet::arianetApi).to receive(:is_meeting_running?).and_return(false)
 
       room = Room.new(name: "test")
       room.room_settings = "{\"muteOnStart\":false,\"joinViaHtml5\":false,\"anyoneCanStart\":true}"
@@ -275,7 +275,7 @@ describe RoomsController, type: :controller do
     end
 
     it "should join the room as moderator if room has the all_join_moderator setting" do
-      allow_any_instance_of(BigBlueButton::BigBlueButtonApi).to receive(:is_meeting_running?).and_return(true)
+      allow_any_instance_of(arianet::arianetApi).to receive(:is_meeting_running?).and_return(true)
 
       room = Room.new(name: "test")
       room.room_settings = "{\"joinModerator\":true}"
@@ -289,7 +289,7 @@ describe RoomsController, type: :controller do
     end
 
     it "should render wait if the correct access code is supplied" do
-      allow_any_instance_of(BigBlueButton::BigBlueButtonApi).to receive(:is_meeting_running?).and_return(false)
+      allow_any_instance_of(arianet::arianetApi).to receive(:is_meeting_running?).and_return(false)
 
       protected_room = Room.new(name: 'test', access_code: "123456")
       protected_room.owner = @owner
@@ -302,7 +302,7 @@ describe RoomsController, type: :controller do
     end
 
     it "should redirect to login if the correct access code isn't supplied" do
-      allow_any_instance_of(BigBlueButton::BigBlueButtonApi).to receive(:is_meeting_running?).and_return(false)
+      allow_any_instance_of(arianet::arianetApi).to receive(:is_meeting_running?).and_return(false)
 
       protected_room = Room.new(name: 'test', access_code: "123456")
       protected_room.owner = @owner
@@ -315,7 +315,7 @@ describe RoomsController, type: :controller do
     end
 
     it "should join owner as moderator if meeting running" do
-      allow_any_instance_of(BigBlueButton::BigBlueButtonApi).to receive(:is_meeting_running?).and_return(true)
+      allow_any_instance_of(arianet::arianetApi).to receive(:is_meeting_running?).and_return(true)
 
       @request.session[:user_id] = @owner.id
       post :join, params: { room_uid: @room, join_name: @owner.name }
@@ -437,7 +437,7 @@ describe RoomsController, type: :controller do
       @user = create(:user)
       @other_room = create(:room)
 
-      allow_any_instance_of(BigBlueButton::BigBlueButtonApi).to receive(:get_meeting_info).and_return(
+      allow_any_instance_of(arianet::arianetApi).to receive(:get_meeting_info).and_return(
         moderatorPW: "modpass",
         attendeePW: "attpass",
       )

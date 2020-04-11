@@ -1,22 +1,22 @@
 # frozen_string_literal: true
 
-# BigBlueButton open source conferencing system - http://www.bigbluebutton.org/.
+# arianet open source conferencing system - http://www.arianet.org/.
 #
-# Copyright (c) 2018 BigBlueButton Inc. and by respective authors (see below).
+# Copyright (c) 2018 arianet Inc. and by respective authors (see below).
 #
 # This program is free software; you can redistribute it and/or modify it under the
 # terms of the GNU Lesser General Public License as published by the Free Software
 # Foundation; either version 3.0 of the License, or (at your option) any later
 # version.
 #
-# BigBlueButton is distributed in the hope that it will be useful, but WITHOUT ANY
+# arianet is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
 # PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
 #
 # You should have received a copy of the GNU Lesser General Public License along
-# with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
+# with arianet; if not, see <http://www.gnu.org/licenses/>.
 
-require 'bigbluebutton_api'
+require 'arianet_api'
 
 module BbbServer
   extend ActiveSupport::Concern
@@ -24,7 +24,7 @@ module BbbServer
 
   META_LISTED = "gl-listed"
 
-  # Checks if a room is running on the BigBlueButton server.
+  # Checks if a room is running on the arianet server.
   def room_running?(bbb_id)
     bbb_server.is_meeting_running?(bbb_id)
   end
@@ -59,7 +59,7 @@ module BbbServer
     bbb_server.join_meeting_url(room.bbb_id, name, password, join_opts)
   end
 
-  # Creates a meeting on the BigBlueButton server.
+  # Creates a meeting on the arianet server.
   def start_session(room, options = {})
     create_options = {
       record: options[:meeting_recorded].to_s,
@@ -84,8 +84,8 @@ module BbbServer
        room.update_attributes(sessions: room.sessions + 1,
           last_session: DateTime.now)
       end
-    rescue BigBlueButton::BigBlueButtonException => e
-      puts "BigBlueButton failed on create: #{e.key}: #{e.message}"
+    rescue arianet::arianetException => e
+      puts "arianet failed on create: #{e.key}: #{e.message}"
       raise e
     end
   end

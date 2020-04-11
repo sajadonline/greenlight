@@ -46,13 +46,13 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
-  # Default credentials (test-install.blindsidenetworks.com/bigbluebutton).
-  config.bigbluebutton_endpoint_default = 'http://bbb.example.com/bigbluebutton/api/'
-  config.bigbluebutton_secret_default = 'secret'
+  # Default credentials (test-install.blindsidenetworks.com/arianet).
+  config.arianet_endpoint_default = 'http://bbb.example.com/arianet/api/'
+  config.arianet_secret_default = 'secret'
 
-  # Use standalone BigBlueButton server.
-  config.bigbluebutton_endpoint = config.bigbluebutton_endpoint_default
-  config.bigbluebutton_secret = config.bigbluebutton_secret_default
+  # Use standalone arianet server.
+  config.arianet_endpoint = config.arianet_endpoint_default
+  config.arianet_secret = config.arianet_secret_default
 
   config.loadbalanced_configuration = false
 

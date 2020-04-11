@@ -1,20 +1,20 @@
 # frozen_string_literal: true
 
-# BigBlueButton open source conferencing system - http://www.bigbluebutton.org/.
+# arianet open source conferencing system - http://www.arianet.org/.
 #
-# Copyright (c) 2018 BigBlueButton Inc. and by respective authors (see below).
+# Copyright (c) 2018 arianet Inc. and by respective authors (see below).
 #
 # This program is free software; you can redistribute it and/or modify it under the
 # terms of the GNU Lesser General Public License as published by the Free Software
 # Foundation; either version 3.0 of the License, or (at your option) any later
 # version.
 #
-# BigBlueButton is distributed in the hope that it will be useful, but WITHOUT ANY
+# arianet is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
 # PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
 #
 # You should have received a copy of the GNU Lesser General Public License along
-# with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
+# with arianet; if not, see <http://www.gnu.org/licenses/>.
 
 require_relative 'boot'
 
@@ -46,28 +46,28 @@ module Greenlight
     # The default callback url that bn launcher will redirect to
     config.gl_callback_url = ENV["GL_CALLBACK_URL"]
 
-    # Default credentials (test-install.blindsidenetworks.com/bigbluebutton).
-    config.bigbluebutton_endpoint_default = "http://test-install.blindsidenetworks.com/bigbluebutton/api/"
-    config.bigbluebutton_secret_default = "8cd8ef52e8e101574e400365b55e11a6"
+    # Default credentials (test-install.blindsidenetworks.com/arianet).
+    config.arianet_endpoint_default = "http://test-install.blindsidenetworks.com/arianet/api/"
+    config.arianet_secret_default = "8cd8ef52e8e101574e400365b55e11a6"
 
-    # Use standalone BigBlueButton server.
-    config.bigbluebutton_endpoint = if ENV["BIGBLUEBUTTON_ENDPOINT"].present?
-       ENV["BIGBLUEBUTTON_ENDPOINT"]
+    # Use standalone arianet server.
+    config.arianet_endpoint = if ENV["arianet_ENDPOINT"].present?
+       ENV["arianet_ENDPOINT"]
     else
-      config.bigbluebutton_endpoint_default
+      config.arianet_endpoint_default
     end
 
-    config.bigbluebutton_secret = if ENV["BIGBLUEBUTTON_SECRET"].present?
-      ENV["BIGBLUEBUTTON_SECRET"]
+    config.arianet_secret = if ENV["arianet_SECRET"].present?
+      ENV["arianet_SECRET"]
     else
-      config.bigbluebutton_secret_default
+      config.arianet_secret_default
     end
 
     # Fix endpoint format if required.
-    config.bigbluebutton_endpoint += "/" unless config.bigbluebutton_endpoint.ends_with?('/')
-    config.bigbluebutton_endpoint += "api/" if config.bigbluebutton_endpoint.ends_with?('bigbluebutton/')
-    config.bigbluebutton_endpoint +=
-      "bigbluebutton/api/" unless config.bigbluebutton_endpoint.ends_with?('bigbluebutton/api/')
+    config.arianet_endpoint += "/" unless config.arianet_endpoint.ends_with?('/')
+    config.arianet_endpoint += "api/" if config.arianet_endpoint.ends_with?('arianet/')
+    config.arianet_endpoint +=
+      "arianet/api/" unless config.arianet_endpoint.ends_with?('arianet/api/')
 
     if config.loadbalanced_configuration
       # Settings for fetching credentials from a loadbalancer based on provider.
@@ -76,7 +76,7 @@ module Greenlight
       config.launcher_secret = ENV["LAUNCHER_SECRET"]
 
       # Fix endpoint format if required.
-      config.loadbalancer_endpoint += "/" unless config.bigbluebutton_endpoint.ends_with?("/")
+      config.loadbalancer_endpoint += "/" unless config.arianet_endpoint.ends_with?("/")
       config.loadbalancer_endpoint = config.loadbalancer_endpoint.chomp("api/")
 
       # Configure which settings are available to user on room creation/edit after creation
@@ -130,7 +130,7 @@ module Greenlight
     # DEFAULTS
 
     # Default branding image if the user does not specify one
-    config.branding_image_default = "https://raw.githubusercontent.com/bigbluebutton/greenlight/master/app/assets/images/logo_with_text.png"
+    config.branding_image_default = "https://raw.githubusercontent.com/arianet/greenlight/master/app/assets/images/logo_with_text.png"
 
     # Default primary color if the user does not specify one
     config.primary_color_default = "#467fcf"

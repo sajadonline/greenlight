@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'bigbluebutton_api'
+require 'arianet_api'
 
 namespace :admin do
   desc "Creates an administrator account"

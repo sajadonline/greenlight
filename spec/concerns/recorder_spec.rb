@@ -1,29 +1,29 @@
 # frozen_string_literal: true
 
-# BigBlueButton open source conferencing system - http://www.bigbluebutton.org/.
+# arianet open source conferencing system - http://www.arianet.org/.
 #
-# Copyright (c) 2018 BigBlueButton Inc. and by respective authors (see below).
+# Copyright (c) 2018 arianet Inc. and by respective authors (see below).
 #
 # This program is free software; you can redistribute it and/or modify it under the
 # terms of the GNU Lesser General Public License as published by the Free Software
 # Foundation; either version 3.0 of the License, or (at your option) any later
 # version.
 #
-# BigBlueButton is distributed in the hope that it will be useful, but WITHOUT ANY
+# arianet is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
 # PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
 #
 # You should have received a copy of the GNU Lesser General Public License along
-# with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
+# with arianet; if not, see <http://www.gnu.org/licenses/>.
 
 require "rails_helper"
-require 'bigbluebutton_api'
+require 'arianet_api'
 
 describe Recorder do
   include Recorder
   include BbbServer
 
-  let(:bbb_server) { BigBlueButton::BigBlueButtonApi.new("http://bbb.example.com/bigbluebutton/api", "secret", "0.8") }
+  let(:bbb_server) { arianet::arianetApi.new("http://bbb.example.com/arianet/api", "secret", "0.8") }
 
   before do
     @user = create(:user)
@@ -32,7 +32,7 @@ describe Recorder do
   end
 
   it "should properly find meeting recordings" do
-    allow_any_instance_of(BigBlueButton::BigBlueButtonApi).to receive(:get_recordings).and_return(
+    allow_any_instance_of(arianet::arianetApi).to receive(:get_recordings).and_return(
       recordings: [
         {
           name: "Example",
@@ -58,7 +58,7 @@ describe Recorder do
   end
 
   it "gets all filtered and sorted recordings for the user" do
-    allow_any_instance_of(BigBlueButton::BigBlueButtonApi).to receive(:get_recordings).and_return(
+    allow_any_instance_of(arianet::arianetApi).to receive(:get_recordings).and_return(
       recordings: [
         {
           meetingID: @room.bbb_id,
@@ -157,7 +157,7 @@ describe Recorder do
 
   context '#filtering' do
     before do
-      allow_any_instance_of(BigBlueButton::BigBlueButtonApi).to receive(:get_recordings).and_return(
+      allow_any_instance_of(arianet::arianetApi).to receive(:get_recordings).and_return(
         recordings: [
           {
             meetingID: @room.bbb_id,
@@ -351,7 +351,7 @@ describe Recorder do
 
   context '#sorting' do
     before do
-      allow_any_instance_of(BigBlueButton::BigBlueButtonApi).to receive(:get_recordings).and_return(
+      allow_any_instance_of(arianet::arianetApi).to receive(:get_recordings).and_return(
         recordings: [
           {
             meetingID: @room.bbb_id,

@@ -1,20 +1,20 @@
 # frozen_string_literal: true
 
-# BigBlueButton open source conferencing system - http://www.bigbluebutton.org/.
+# arianet open source conferencing system - http://www.arianet.org/.
 #
-# Copyright (c) 2018 BigBlueButton Inc. and by respective authors (see below).
+# Copyright (c) 2018 arianet Inc. and by respective authors (see below).
 #
 # This program is free software; you can redistribute it and/or modify it under the
 # terms of the GNU Lesser General Public License as published by the Free Software
 # Foundation; either version 3.0 of the License, or (at your option) any later
 # version.
 #
-# BigBlueButton is distributed in the hope that it will be useful, but WITHOUT ANY
+# arianet is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
 # PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
 #
 # You should have received a copy of the GNU Lesser General Public License along
-# with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
+# with arianet; if not, see <http://www.gnu.org/licenses/>.
 
 class ApplicationController < ActionController::Base
   include BbbServer
@@ -134,12 +134,12 @@ class ApplicationController < ActionController::Base
   end
   helper_method :relative_root
 
-  # Determines if the BigBlueButton endpoint is configured (or set to default).
-  def bigbluebutton_endpoint_default?
+  # Determines if the arianet endpoint is configured (or set to default).
+  def arianet_endpoint_default?
     return false if Rails.configuration.loadbalanced_configuration
-    Rails.configuration.bigbluebutton_endpoint_default == Rails.configuration.bigbluebutton_endpoint
+    Rails.configuration.arianet_endpoint_default == Rails.configuration.arianet_endpoint
   end
-  helper_method :bigbluebutton_endpoint_default?
+  helper_method :arianet_endpoint_default?
 
   def allow_greenlight_accounts?
     return Rails.configuration.allow_user_signup unless Rails.configuration.loadbalanced_configuration
@@ -191,10 +191,10 @@ class ApplicationController < ActionController::Base
     payload[:host] = @user_domain
   end
 
-  # Manually handle BigBlueButton errors
-  rescue_from BigBlueButton::BigBlueButtonException do |ex|
-    logger.error "BigBlueButtonException: #{ex}"
-    render "errors/bigbluebutton_error"
+  # Manually handle arianet errors
+  rescue_from arianet::arianetException do |ex|
+    logger.error "arianetException: #{ex}"
+    render "errors/arianet_error"
   end
 
   # Manually deal with 401 errors

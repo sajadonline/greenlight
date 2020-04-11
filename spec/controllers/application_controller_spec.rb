@@ -1,20 +1,20 @@
 # frozen_string_literal: true
 
-# BigBlueButton open source conferencing system - http://www.bigbluebutton.org/.
+# arianet open source conferencing system - http://www.arianet.org/.
 #
-# Copyright (c) 2018 BigBlueButton Inc. and by respective authors (see below).
+# Copyright (c) 2018 arianet Inc. and by respective authors (see below).
 #
 # This program is free software; you can redistribute it and/or modify it under the
 # terms of the GNU Lesser General Public License as published by the Free Software
 # Foundation; either version 3.0 of the License, or (at your option) any later
 # version.
 #
-# BigBlueButton is distributed in the hope that it will be useful, but WITHOUT ANY
+# arianet is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
 # PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
 #
 # You should have received a copy of the GNU Lesser General Public License along
-# with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
+# with arianet; if not, see <http://www.gnu.org/licenses/>.
 
 require 'rails_helper'
 
@@ -29,7 +29,7 @@ describe ApplicationController do
     end
 
     def error
-      raise BigBlueButton::BigBlueButtonException
+      raise arianet::arianetException
     end
 
     def user_not_found
@@ -71,12 +71,12 @@ describe ApplicationController do
     end
 
     it "returns whether the default bbb endpoint is being used" do
-      allow(Rails.configuration).to receive(:bigbluebutton_endpoint)
-        .and_return("http://test-install.blindsidenetworks.com/bigbluebutton/api/")
-      allow(Rails.configuration).to receive(:bigbluebutton_endpoint_default)
-        .and_return("http://test-install.blindsidenetworks.com/bigbluebutton/api/")
+      allow(Rails.configuration).to receive(:arianet_endpoint)
+        .and_return("http://test-install.blindsidenetworks.com/arianet/api/")
+      allow(Rails.configuration).to receive(:arianet_endpoint_default)
+        .and_return("http://test-install.blindsidenetworks.com/arianet/api/")
 
-      expect(controller.bigbluebutton_endpoint_default?).to eql(true)
+      expect(controller.arianet_endpoint_default?).to eql(true)
     end
   end
 
@@ -136,11 +136,11 @@ describe ApplicationController do
   end
 
   context "errors" do
-    it "renders a BigBlueButton error if a BigBlueButtonException occurrs" do
+    it "renders a arianet error if a arianetException occurrs" do
       routes.draw { get "error" => "anonymous#error" }
 
       get :error
-      expect(response).to render_template("errors/bigbluebutton_error")
+      expect(response).to render_template("errors/arianet_error")
     end
 
     it "renders a 404 error if user is not found" do

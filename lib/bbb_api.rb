@@ -4,21 +4,21 @@ module BbbApi
   RETURNCODE_SUCCESS = "SUCCESS"
 
   def bbb_endpoint
-    Rails.configuration.bigbluebutton_endpoint
+    Rails.configuration.arianet_endpoint
   end
 
   def bbb_secret
-    Rails.configuration.bigbluebutton_secret
+    Rails.configuration.arianet_secret
   end
 
-  # Sets a BigBlueButtonApi object for interacting with the API.
+  # Sets a arianetApi object for interacting with the API.
   def bbb(user_provider)
     if Rails.configuration.loadbalanced_configuration
       user_domain = retrieve_provider_info(user_provider)
 
-      BigBlueButton::BigBlueButtonApi.new(remove_slash(user_domain["apiURL"]), user_domain["secret"], "0.8")
+      arianet::arianetApi.new(remove_slash(user_domain["apiURL"]), user_domain["secret"], "0.8")
     else
-      BigBlueButton::BigBlueButtonApi.new(remove_slash(bbb_endpoint), bbb_secret, "0.8")
+      arianet::arianetApi.new(remove_slash(bbb_endpoint), bbb_secret, "0.8")
     end
   end
 

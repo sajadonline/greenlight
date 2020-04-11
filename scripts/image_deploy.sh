@@ -27,7 +27,7 @@ display_usage() {
   echo "This script should be used as part of a CI strategy."
   echo -e "Usage:\n  build_image.sh [ARGUMENTS]"
   echo -e "\nMandatory arguments \n"
-  echo -e "  repo_slug     The git repository  (e.g. bigbluebutton/greenlight)"
+  echo -e "  repo_slug     The git repository  (e.g. arianet/greenlight)"
   echo -e "  branch | tag  The branch (e.g. master | release-2.0.5)"
   echo -e "  commit_sha    The sha for the current commit (e.g. 750615dd479c23c8873502d45158b10812ea3274)"
 }
@@ -56,7 +56,7 @@ export CD_COMMIT_SHA=$3
 export CD_COMMIT_BEFORE_SHA=$4
 
 if [ -z $CD_REF_SLUG ]; then
-  echo "#### Repository not included, it should have been passed as an argument. [e.g. bigbluebutton/greenlight]"
+  echo "#### Repository not included, it should have been passed as an argument. [e.g. arianet/greenlight]"
   exit 0
 fi
 

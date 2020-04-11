@@ -53,8 +53,8 @@ gem 'omniauth-bn-launcher', git: 'https://github.com/blindsidenetworks/omniauth-
 gem 'bn-ldap-authentication', git: 'https://github.com/blindsidenetworks/bn-ldap-authentication.git'
 gem 'net-ldap'
 
-# BigBlueButton API wrapper.
-gem 'bigbluebutton-api-ruby'
+# arianet API wrapper.
+gem 'arianet-api-ruby'
 
 # Front-end.
 gem 'bootstrap', '~> 4.3.1'

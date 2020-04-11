@@ -1,20 +1,20 @@
 # frozen_string_literal: true
 
-# BigBlueButton open source conferencing system - http://www.bigbluebutton.org/.
+# arianet open source conferencing system - http://www.arianet.org/.
 #
-# Copyright (c) 2018 BigBlueButton Inc. and by respective authors (see below).
+# Copyright (c) 2018 arianet Inc. and by respective authors (see below).
 #
 # This program is free software; you can redistribute it and/or modify it under the
 # terms of the GNU Lesser General Public License as published by the Free Software
 # Foundation; either version 3.0 of the License, or (at your option) any later
 # version.
 #
-# BigBlueButton is distributed in the hope that it will be useful, but WITHOUT ANY
+# arianet is distributed in the hope that it will be useful, but WITHOUT ANY
 # WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
 # PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
 #
 # You should have received a copy of the GNU Lesser General Public License along
-# with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
+# with arianet; if not, see <http://www.gnu.org/licenses/>.
 
 class RoomsController < ApplicationController
   include Pagy::Backend
@@ -166,10 +166,10 @@ class RoomsController < ApplicationController
 
     begin
       redirect_to join_path(@room, current_user.name, opts, current_user.uid)
-    rescue BigBlueButton::BigBlueButtonException => e
+    rescue arianet::arianetException => e
       logger.error("Support: #{@room.uid} start failed: #{e}")
 
-      redirect_to room_path, alert: I18n.t(e.key.to_s.underscore, default: I18n.t("bigbluebutton_exception"))
+      redirect_to room_path, alert: I18n.t(e.key.to_s.underscore, default: I18n.t("arianet_exception"))
     end
 
     # Notify users that the room has started.
